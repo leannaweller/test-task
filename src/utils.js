@@ -136,5 +136,5 @@ export function validate(user){
     hasError=true;
     userError.company.bs='Invalid catch BS';
   }
-  return hasError ? userError : {};
+  if(hasError) return userError;
 }

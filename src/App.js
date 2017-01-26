@@ -45,22 +45,32 @@ class App extends Component {
     }
   }
   addNewUser(data){
+    console.log('ADD NEW USER')
     let contacts = this.state.contacts;
-    let displayedContacts = this.state.displayedContacts;
-    if(localStorage.getItem("users")){
-      let users = JSON.parse(localStorage.getItem("users"));
-      users.push(data);
-      localStorage.setItem("users", JSON.stringify(users));
-    }
-
-    localStorage
+    data.id = contacts[contacts.length-1].id+1;
+    let users;
+    contacts.push(data);
+    localStorage.getItem("users") ?
+    users = JSON.parse(localStorage.getItem("users"))
+    :
+    users = []
+    users.push(data);
+    contacts.push()
+    localStorage.setItem("users", JSON.stringify(users));
+    this.setState({contacts:contacts,displayedContacts:contacts});
   }
   loadData(){
     let self=this;
     axios.get('https://jsonplaceholder.typicode.com/users').then(function(data){
-      console.log(data.data);
-      if(self.state.contacts.length===0){
-        self.setState({contacts:data.data,displayedContacts:data.data});
+    // console.log(data.data);
+    let contacts = data.data
+    if (localStorage.getItem("users")){
+      let users = JSON.parse(localStorage.getItem("users"));
+      contacts = contacts.concat(users);
+      console.log(contacts);
+    }
+    if(self.state.contacts.length===0){
+        self.setState({contacts:contacts,displayedContacts:contacts});
       }
     });
   }

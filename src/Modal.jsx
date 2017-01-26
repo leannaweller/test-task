@@ -49,14 +49,13 @@ export default class Modal extends React.Component {
     }
     const error=utils.validate(newUser);
     if(!error){
-      this.setState({error:utils.error});
-      this.props.onClose();
+      this.setState({error:utils.error()});
+      console.log('NEW USER');
+      console.log(newUser);
+      this.props.onSubmit(newUser);
     }else{
       this.setState({error:error});
     }
-    console.log('NEW USER');
-    console.log(newUser);
-    this.props.onSubmit();
  }
   render(){
     const actions = [
