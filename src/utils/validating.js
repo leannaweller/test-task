@@ -1,3 +1,4 @@
+import {error} from './constants';
 export function validate(user){
   let hasError=false;
   let userError=error();

@@ -22,7 +22,7 @@ export function countDistance(geo1, geo2, miles = true)
 export function filterBy(filter,array){
   return  array.filter(item=>{
     let same=false;
-    Object.keys(item).forEach(function (key) {
+    Object.keys(item).forEach( (key) => {
       if (item.hasOwnProperty(key)) {
         let prop=item[key];
         if(typeof prop === 'object'){
