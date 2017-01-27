@@ -10,7 +10,7 @@
 .App-header {
   background-color: #222;
   /*height: 150px;*/
-  padding: 20px;
+  padding: 10px;
   color: white;
 }
 .App-header > h2{
@@ -57,11 +57,18 @@ input[type='text']{
   box-shadow: 0 10px 6px -6px #E6E6E6;
   font-size: 17px;
 }
-.contact-icon{
-  margin: 10px 0 30px;
-}
-.contactlist{
+table.contactlist{
   padding: 20px;
+  text-align: left;
+  margin: 0 auto;
+}
+table.contactlist  td {
+  vertical-align: top
+}
+table.contactlist td,th{
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 .main{
   padding: 70px 20px;
@@ -71,6 +78,9 @@ input[type='text']{
 }
 .flex-container{
   display: flex;
+}
+.flex-container > *{
+  margin-right: 7px;
 }
 .contact{
    background-color: #fff;
@@ -132,4 +142,10 @@ input[type='text']{
 .button{
   border:none;
   background-color: #ddd;
+}
+.hidden-info{
+  padding-left: 20px;
+}
+.hidden-info > div{
+  margin-top: 10px;
 }

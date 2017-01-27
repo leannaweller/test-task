@@ -43,7 +43,9 @@ class Container extends Component {
         <div>
           {this.props.children}
         </div>
-        <Contactlist {...this.props}/>
+        <Contactlist
+        displayed = {this.props.displayed}
+        geo={this.props.geo}/>
       </div>
     );
   }
