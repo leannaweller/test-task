@@ -50,9 +50,4 @@ export default class Contact extends Component{
       </tr>
     );
   }
-
-
-
-
-
 }

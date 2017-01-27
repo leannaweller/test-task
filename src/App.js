@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Container from './Container';
 import * as utils from './utils';
+import config from './config'
 import Immutable from 'immutable';
 class App extends Component {
   constructor(props){
@@ -30,7 +31,7 @@ class App extends Component {
   loadData(){
     if(this.state.contacts.length===0){
       let data1 = utils.getDataFromLocalStorage("users");
-      utils.getDataFromURL('https://jsonplaceholder.typicode.com/users').then(data=>{
+      utils.getDataFromURL(config.url).then(data=>{
           data = data.data;
           let contacts = utils.mergeArrays(data,data1);
           this.setState({contacts:contacts});

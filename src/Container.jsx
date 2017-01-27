@@ -34,7 +34,7 @@ class Container extends Component {
           <input type="text" onChange={(event)=>{this.props.onFilterChange(event)}}/>
           <button className='button' onClick={()=>{this.setState({open:true})}}><i className='ion-plus'></i></button>
             <div className='sort-group'>
-              <span>Sort:</span>
+              <span>Sort by name:</span>
               <i className={this.state.arrowUpClass} onClick={()=>{this.sort(1)}}></i>
               <i className={this.state.arrowDownClass} onClick={()=>{this.sort(-1)}}></i>
             </div>
