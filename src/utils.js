@@ -1,3 +1,4 @@
+import axios from 'axios';
   export function error(){
     return {
       name:'',
@@ -137,4 +138,55 @@ export function validate(user){
     userError.company.bs='Invalid catch BS';
   }
   if(hasError) return userError;
+}
+export function saveToLocalStorage(data,itemName){
+  let array;
+  localStorage.getItem(itemName) ?
+  array = JSON.parse(localStorage.getItem(itemName))
+  :
+  array = []
+  array.push(data);
+  localStorage.setItem("itemName", JSON.stringify(array));
+}
+export function getDataFromURL(url){
+  console.log('GET DATA');
+  return axios.get(url);
+}
+export function getDataFromLocalStorage(itemName){
+  if (localStorage.getItem(itemName)){
+    return JSON.parse(localStorage.getItem(itemName));
+  }else{
+    return null;
+  }
+}
+export function sortAndFilter(data,filter,order){
+  if(filter){
+    console.log(`FILTER ${filter}`);
+    data=filterBy(this.state.filter,data);
+  }
+  console.log(data);
+  if(order){
+    console.log('SORT CONTACTS');
+    if(order>0){
+      data.sort((a,b)=>{
+        return compare(a,b);
+      });
+    }else{
+      data.sort((a,b)=>{
+        return compare(b,a);
+      });
+    }
+  }
+  console.log(data)
+  return data;
+}
+export function mergeArrays(arr1,arr2){
+  if(arr1){
+    if(arr2){
+      arr1 = arr1.concat(arr2);
+    }
+    return arr1;
+  }else if(arr2){
+    return arr2;
+  }
 }
