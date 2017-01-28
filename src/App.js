@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Container from './Container';
 import * as utils from './utils';
-import config from './config'
+import config from './config';
 import Immutable from 'immutable';
 class App extends Component {
   constructor(props){
@@ -17,26 +17,27 @@ class App extends Component {
       filter:'',
       order:''
     }
-    this.loadData=this.loadData.bind(this);
-    this.addNewUser=this.addNewUser.bind(this);
   }
-  addNewUser(data){
+  // shouldComponentUpdate(nextProps,nextState){
+  //
+  // }
+  addNewUser = (data) => {
     console.log('ADD NEW USER');
     data.id = contacts[contacts.length-1].id+1;
     let contacts = this.state.contacts;
-    contacts.push(data);
+    contacts=contacts.push(data);
     utils.saveToLocalStorage(data,"users");
     this.setState({contacts:contacts});
   }
-  loadData(){
+  loadData = () => {
     if(this.state.contacts.length===0){
       let data1 = utils.getDataFromLocalStorage("users");
       utils.getDataFromURL(config.url).then(data=>{
           data = data.data;
           let contacts = utils.mergeArrays(data,data1);
-          this.setState({contacts:contacts});
+          this.setState({contacts:Immutable.List(contacts)});
       },error=>{
-        this.setState({contacts:data1});
+        this.setState({contacts:Immutable.List(data1)});
       });
     }
 
