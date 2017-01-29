@@ -127,6 +127,11 @@ table.contactlist td,th{
   margin-right: 10px;
   line-height: 30px;
 }
+.download > i{
+  margin-right: 10px;
+  font-size: 30px;
+  color: #aaa;
+}
 .sort-group > i{
   font-size: 26px;
   color: #ddd;

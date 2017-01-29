@@ -39,6 +39,9 @@ class Container extends Component {
     return (
       <div className='main'>
         <div style={{'display':'flex'}} className='find'>
+          <div className='download' onClick={()=>{this.props.onDownload()}}>
+            <i className="ion-code-download"></i>
+          </div>
           <input type="text" onChange={(event)=>{this.props.onFilterChange(event)}}/>
           <button className='button' onClick={()=>{this.setState({open:true})}}><i className='ion-plus'></i></button>
             <div className='sort-group'>

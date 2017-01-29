@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TextField from 'material-ui/TextField';
 import * as utils from './utils'
 export default class Modal extends React.Component {
   constructor(props){
     super(props);
-    this.handleSubmit=this.handleSubmit.bind(this);
-    this.handleClose=this.handleClose.bind(this);
-    this.renderTextFields=this.renderTextFields.bind(this);
     this.state={
       error:utils.error()
     }
   }
- getChildContext() {
-   return { muiTheme: getMuiTheme(baseTheme) };
- }
- renderTextFields(item){
+ renderTextFields = (item) => {
    const errorStyle={border:'1px solid tomato'}
    return <div className='text-field'>
      {
@@ -39,13 +31,13 @@ export default class Modal extends React.Component {
      }
    </div>
  }
- handleClose(){
+ handleClose = () => {
    console.log('ERROR');
    console.log(utils.error());
    this.setState({error:utils.error()});
    this.props.onClose();
  }
- handleSubmit(){
+ handleSubmit = () => {
     const newUser={
       name:this.refs.name.value,
       username:this.refs.username.value,
@@ -127,6 +119,3 @@ export default class Modal extends React.Component {
 
 
 }
-Modal.childContextTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
-};

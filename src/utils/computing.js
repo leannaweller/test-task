@@ -75,12 +75,5 @@ export function sortAndFilter(data,filter,order){
   return data;
 }
 export function mergeArrays(arr1,arr2){
-  if(arr1){
-    if(arr2){
-      arr1 = arr1.concat(arr2);
-    }
-    return arr1;
-  }else if(arr2){
-    return arr2;
-  }
+  return   _.merge(arr1, arr2)
 }

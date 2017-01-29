@@ -5,6 +5,11 @@ import Container from './Container';
 import * as utils from './utils';
 import config from './config';
 import Immutable from 'immutable';
+import Notification from './Notification';
+import Snackbar from 'material-ui/Snackbar';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -15,12 +20,17 @@ class App extends Component {
         lng: "81.1496"
       },
       filter:'',
-      order:''
+      order:'',
+      showLoadNotification:false
     }
   }
+  getChildContext() {
+    return { muiTheme: getMuiTheme(baseTheme) };
+  }
   shouldComponentUpdate(nextProps,nextState){
-    let{contacts,filter,order} = this.state;
-    if(nextState.contacts===contacts && nextState.filter===filter && nextState.order ===order){
+    let{contacts,filter,order,showLoadNotification} = this.state;
+    if(nextState.contacts===contacts && nextState.filter===filter
+      && nextState.order ===order && nextState.showLoadNotification===showLoadNotification){
       return false;
     }
     return true;
@@ -34,24 +44,21 @@ class App extends Component {
     this.setState({contacts:contacts});
   }
   loadData = () => {
-    if(this.state.contacts.length===0){
-      let data1 = utils.getDataFromLocalStorage("users");
-      utils.getDataFromURL(config.url).then(data=>{
-          data = data.data;
-          let contacts = utils.mergeArrays(data,data1);
-          this.setState({contacts:Immutable.List(contacts)});
-      },error=>{
-        this.setState({contacts:Immutable.List(data1)});
-      });
-    }
-
+    let data1 = utils.getDataFromLocalStorage("users");
+    utils.getDataFromURL(config.url).then(data=>{
+        data = data.data;
+        let contacts = utils.mergeArrays(data,data1);
+        this.setState({contacts:Immutable.List(contacts),showLoadNotification:true});
+    },error=>{
+      this.setState({contacts:Immutable.List(data1),showLoadNotification:true});
+    });
   }
   componentWillMount(){
     this.loadData();
-    this.fetchData=setInterval(this.loadData,5000);
+    // this.fetchData=setInterval(this.loadData,5000);
   }
   componentWillUnmount(){
-    clearInterval(this.fetchData);
+    // clearInterval(this.fetchData);
   }
   render() {
     let {contacts,filter,order}=this.state;
@@ -68,6 +75,7 @@ class App extends Component {
         geo={this.state.geo}
         displayed={Immutable.List(displayed)}
         contacts={this.state.contacts}
+        onDownload={()=>{this.loadData()}}
         >
           {
             this.state.filter ? <h2>Result: {displayed.length} items </h2> : <div></div>
@@ -77,5 +85,7 @@ class App extends Component {
     );
   }
 }
-
+App.childContextTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
+};
 export default App;
