@@ -1,62 +1,126 @@
 import {error} from './constants';
+import validator from 'validator';
+import config from '../config';
+
+const isNotAlpha = (item,name) => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }else if (!validator.isAlpha(item,config.locale)){
+    return `Invalid ${name}`;
+  }
+}
+const isEmpty = (item,name) => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }
+}
+const isNotAlphanumeric = (item,name) => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }else if (!validator.isAlphanumeric(item,config.locale)){
+    return `Invalid ${name}`;
+  }
+}
+const isNotEmail = (item,name='email') => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }else if (!validator.isEmail(item)){
+    return `Invalid ${name}`;
+  }
+}
+const isNotURL = (item,name='website') => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }else if (!validator.iURL(item)){
+    return `Invalid ${name}`;
+  }
+}
+const isNotMobilePhone = (item,name='phone') => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }else if (!validator.isEmail(item,config.locale)){
+    return `Invalid ${name}`;
+  }
+}
+const isNotNumeric = (item,name) => {
+  if(validator.isEmpty(item)){
+    return `${name} is empty`;
+  }else if (!validator.isNotNumeric(item)){
+    return `Invalid ${name}`;
+  }
+}
 export function validate(user){
   let hasError=false;
   let userError=error();
-  if(user.name.length===0){
-    hasError=true;
-    userError.name='Invalid name';
+  let currentError = isNotAlpha(user.name,"name");
+  if(currentError){
+    let hasError = true;
+    userError.name = currentError;
   }
-  if(user.username.length===0){
-    hasError=true;
-    userError.username='Invalid username';
+  currentError = isNotAlphanumeric(user.username,"username");
+  if(currentError){
+    let hasError = true;
+    userError.username = currentError;
   }
-  if(user.email.length===0){
-    hasError=true;
-    userError.email='Invalid email';
+  currentError = isNotEmail(user.email);
+  if(currentError){
+    let hasError = true;
+    userError.email = currentError;
   }
-  if(user.address.street.length===0){
-    hasError=true;
-    userError.address.street='Invalid street';
+  currentError = isNotMobilePhone(user.phone);
+  if(currentError){
+    let hasError=true;
+    userError.phone=currentError;
   }
-  if(user.address.suite.length===0){
-    hasError=true;
-    userError.address.suite='Invalid suite';
+  currentError = isNotURL(user.website);
+  if(currentError){
+    let hasError=true;
+    userError.website=currentError;
   }
-  if(user.address.city.length===0){
-    hasError=true;
-    userError.address.city='Invalid city';
+  currentError = isNotAlpha(user.address.street,"street");
+  if(currentError){
+    hasError = true;
+    userError.address.street = currentError;
   }
-  if(user.address.zipcode.length===0){
-    hasError=true;
-    userError.address.zipcode='Invalid zipcode';
+  currentError = isNotAlphanumeric(user.address.suite,"suite");
+  if(currentError){
+    hasError = true;
+    userError.address.suite = currentError;
   }
-  if(user.address.geo.lat.length===0){
-    hasError=true;
-    userError.address.geo.lat='Invalid lat';
+  currentError = isNotAlpha(user.address.city,"city");
+  if(currentError){
+    hasError = true;
+    userError.address.city = currentError;
   }
-  if(user.address.geo.lng.length===0){
-    hasError=true;
-    userError.address.geo.lng='Invalid lng';
+  currentError = isNotNumeric(user.address.zipcode,"zipcode");
+  if(currentError){
+    hasError = true;
+    userError.address.zipcode = currentError;
   }
-  if(user.phone.length===0){
+  currentError = isNotNumeric(user.address.geo.lat,"lat")
+  if(currentError){
     hasError=true;
-    userError.phone='Invalid phone';
+    userError.address.geo.lat=currentError;
   }
-  if(user.website.length===0){
+  currentError = isNotNumeric(user.address.geo.lng,"lng")
+  if(currentError){
     hasError=true;
-    userError.website='Invalid website';
+    userError.address.geo.lng=currentError;
   }
-  if(user.company.name.length===0){
+  currentError = isNotAlphanumeric(user.company.cname,"company name");
+  if(currentError){
     hasError=true;
-    userError.company.name='Invalid company name';
+    userError.company.cname=currentError;
   }
-  if(user.company.catchPhrase.length===0){
+  currentError = isEmpty(user.company.catchPhrase,"catch phrase");
+  if(currentError){
     hasError=true;
-    userError.company.catchPhrase='Invalid catch phrase';
+    userError.company.catchPhrase=currentError;
   }
-  if(user.company.bs.length===0){
+  currentError = isEmpty(user.company.bs,"bs");
+  if(currentError){
     hasError=true;
-    userError.company.bs='Invalid catch BS';
+    userError.company.bs=currentError;
   }
   if(hasError) return userError;
 }

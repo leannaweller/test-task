@@ -16,7 +16,7 @@ export function error(){
     phone:'',
     website:'',
     company:{
-      name:'',
+      cname:'',
       catchPhrase:'',
       bs:''
     }

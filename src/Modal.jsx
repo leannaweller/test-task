@@ -55,7 +55,7 @@ export default class Modal extends React.Component {
       phone:this.refs.phone.value,
       website:this.refs.website.value,
       company:{
-        name:this.refs.cname.value,
+        cname:this.refs.cname.value,
         catchPhrase:this.refs.catchPhrase.value,
         bs:this.refs.bs.value
       }
