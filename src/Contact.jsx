@@ -10,6 +10,16 @@ export default class Contact extends Component{
       showCompanyInfo:false
     }
   }
+  shouldComponentUpdate(nextProps,nextState){
+    const {showPersonalInfo,showAddress,showCompanyInfo} = this.state;
+    const {contact,geo} = this.props;
+    if(nextProps.contact === contact && nextProps.geo === geo &&
+      nextState.showPersonalInfo === showPersonalInfo && nextState.showAddress === showAddress
+      && nextState.showCompanyInfo === showCompanyInfo){
+        return false;
+    }
+    return true;
+  }
   render(){
     const {contact} = this.props;
     return(
@@ -28,10 +38,9 @@ export default class Contact extends Component{
         <td onClick={()=>{this.setState({showAddress:!this.state.showAddress})}}>
           <div className='flex-container'>
             <i className={this.state.showAddress ? 'ion-minus-circled' : 'ion-plus-circled'}></i>
-            <div>{contact.address.street}</div>
+            <div>{`${contact.address.street}, ${contact.address.suite.toLowerCase()}`}</div>
           </div>
           <div className='hidden-info' style={this.state.showAddress ? {display:'block'}:{display:'none'}}>
-            <div>{contact.address.suite}</div>
             <div>{contact.address.city}</div>
             <div>{contact.address.zipcode}</div>
             <div>{'Distance: '+utils.countDistance(this.props.geo,contact.address.geo).toFixed(2)+' km'}</div>

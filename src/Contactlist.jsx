@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import Contact from './Contact'
 
 class Contactlist extends Component {
+  shouldComponentUpdate(nextProps,nextState){
+    if(nextProps.geo===this.props.geo && nextProps.displayed===this.props.displayed){
+      return false;
+    }
+    return true;
+  }
   render() {
     return (
       <table className="contactlist">

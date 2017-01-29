@@ -18,9 +18,13 @@ class App extends Component {
       order:''
     }
   }
-  // shouldComponentUpdate(nextProps,nextState){
-  //
-  // }
+  shouldComponentUpdate(nextProps,nextState){
+    let{contacts,filter,order} = this.state;
+    if(nextState.contacts===contacts && nextState.filter===filter && nextState.order ===order){
+      return false;
+    }
+    return true;
+  }
   addNewUser = (data) => {
     console.log('ADD NEW USER');
     data.id = contacts[contacts.length-1].id+1;
@@ -62,7 +66,7 @@ class App extends Component {
         sortContacts={(order)=>{this.setState({order:order})}}
         onFilterChange={(e)=>{this.setState({filter:e.target.value})}}
         geo={this.state.geo}
-        displayed={displayed}
+        displayed={Immutable.List(displayed)}
         contacts={this.state.contacts}
         >
           {

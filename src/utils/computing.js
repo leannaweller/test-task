@@ -1,4 +1,4 @@
-
+import _ from 'lodash';
 export function countDistance(geo1, geo2, miles = true)
 {
     let lat1=geo1.lat;
@@ -62,11 +62,11 @@ export function sortAndFilter(data,filter,order){
   if(order){
     console.log('SORT CONTACTS');
     if(order>0){
-      data.sort((a,b)=>{
+      data = data.sort((a,b)=>{
         return compare(a,b);
       });
     }else{
-      data.sort((a,b)=>{
+      data = data.sort((a,b)=>{
         return compare(b,a);
       });
     }

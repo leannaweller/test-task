@@ -10,15 +10,23 @@ class Container extends Component {
       arrowUpClass:'ion-arrow-up-c',
       arrowDownClass:'ion-arrow-down-c'
     }
-    this.sort=this.sort.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this);
   }
-  handleSubmit(data){
+  shouldComponentUpdate(nextProps,nextState){
+    let {open,arrowUpClass,arrowDownClass} = this.state;
+    let {geo,displayed,contacts} = this.props;
+    if(nextState.open === open && nextState.arrowUpClass === arrowUpClass &&
+      nextState.arrowDownClass === arrowDownClass && nextProps.geo === geo && nextProps.displayed === displayed &&
+      nextProps.contacts === contacts){
+        return false;
+      }
+      return true;
+  }
+  handleSubmit = (data) => {
     console.log('ADD NEW USER');
     this.setState({open:false})
     this.props.onAddNewUser(data);
   }
-  sort(order){
+  setSortOrder = (order) => {
     if(order>0){
       this.setState({arrowUpClass:'ion-arrow-up-c selected',arrowDownClass:'ion-arrow-down-c'});
       this.props.sortContacts(1)
@@ -35,8 +43,8 @@ class Container extends Component {
           <button className='button' onClick={()=>{this.setState({open:true})}}><i className='ion-plus'></i></button>
             <div className='sort-group'>
               <span>Sort by name:</span>
-              <i className={this.state.arrowUpClass} onClick={()=>{this.sort(1)}}></i>
-              <i className={this.state.arrowDownClass} onClick={()=>{this.sort(-1)}}></i>
+              <i className={this.state.arrowUpClass} onClick={()=>{this.setSortOrder(1)}}></i>
+              <i className={this.state.arrowDownClass} onClick={()=>{this.setSortOrder(-1)}}></i>
             </div>
           <Modal onSubmit={this.handleSubmit} onClose={()=>{this.setState({open:false})}} open={this.state.open}/>
         </div>
